@@ -1,0 +1,60 @@
+# fly.toml app configuration file generated for lirenda on 2023-04-21T01:27:59+08:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "fly-nezha-dezhou"
+primary_region = "dfw"
+
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+GH_USER = "lirentian0215"
+GH_CLIENTID = "146819189a16febe47b8"
+GH_CLIENTSECRET = "ee7dd111139875335d6ffe023018f2a0cfa74086"
+GH_BACKUP_USER = "lirentian0215"
+GH_REPO = "flybackup"
+GH_EMAIL = "lirentian0215@gmail.com"
+GH_PAT = "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"
+ARGO_JSON = "eyJhIjoiNTA2ZjA2MmY2MTcwOTkwNGUyYWRmYWRlY2QxZWM4ZmYiLCJ0IjoiYmIyODQ4YzQtNDIwNi00ODRhLThkZDEtN2E0MTU2NDQwYjNiIiwicyI6Ik1EVTJNR0UxTkRrdFl6SmxaQzAwTVRWbExUbGtaR0l0T1Raa1pqSmhZV1JsWWpWaCJ9"
+DATA_DOMAIN = "nezha.monique.nom.za"
+WEB_DOMAIN = "fw.monique.nom.za"
+SSH_DOMAIN = "fs.monique.nom.za"
+SSH_PASSWORD = "li790215"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[mounts]
+  destination = "/dashboard/data"
+  source = "nz_data"
+
+[[services]]
+  http_checks = []
+  grpcport_port = 5555
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+    force_https = true
+    
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
